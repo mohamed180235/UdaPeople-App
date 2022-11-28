@@ -37,4 +37,4 @@
   roles:
     # Your code here
     - configure-server
-    - cofigure-prometheus-node-exporter
+    - configure-prometheus-node-exporter
