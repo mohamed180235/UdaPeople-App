@@ -218,6 +218,7 @@ jobs:
       - attach_workspace:
           at: ~/ 
       # Install dependencies
+      - install_awscli
       - install_ansible
       - run:
           name: Configure server
