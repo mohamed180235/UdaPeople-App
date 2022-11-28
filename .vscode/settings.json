@@ -1,5 +1,0 @@
-{
-    "yaml.schemas": {
-        "https://json.schemastore.org/circleciconfig.json": "file:///home/mohamed/3rd-Udacit-Project/UdaPeople-App/.circleci/config.yml"
-    }
-}
