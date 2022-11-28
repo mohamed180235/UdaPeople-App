@@ -1,17 +1,13 @@
----
-  - name: "install dependencies."
-    become: true
-    apt:
-      name: "npm"
-      state: latest
-      update_cache: yes
-  
+---  
   - name: "install NodeJS 13.8.0"
     become: true
     shell: |
+      sudo apt install curl
+
       curl -fsSL https://deb.nodesource.com/setup_lts.x | sudo -E bash -
       sudo apt-get install -y nodejs
 
+      sudo apt install npm
       # Use n version manager to use Node.js v13.8.0
       sudo npm install -g n
       sudo n 13.8.0
