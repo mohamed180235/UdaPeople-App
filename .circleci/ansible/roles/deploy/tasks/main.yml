@@ -6,9 +6,8 @@
   
   - name: "Copy files"
     become: true
-    copy:
-      src: .circleci/ansible/roles/deploy/files/artifact.tar.gz
-      dest: ~/backend/artifact.tar.gz 
+    shell: |
+      cp .circleci/ansible/roles/deploy/files/artifact.tar.gz ~/backend
   
   - name: "Unarchive backend files"
     shell: |
