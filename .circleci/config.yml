@@ -246,7 +246,7 @@ jobs:
   run-migrations:
     docker:
       # Docker image here that supports NodeJS
-      - image: cimg/python:3.10    
+      - image: circleci/node:13.8.0  
     steps:
       # Checkout code from git
       - checkout
@@ -254,7 +254,6 @@ jobs:
       - restore_cache:
           keys: [backend-build]
       - install_awscli
-      - install_nodejs
       - run:
           name: Run migrations
           command: |
@@ -412,5 +411,3 @@ workflows:
       #     requires: [smoke-test]
       # - cleanup:
       #     requires: [cloudfront-update]
-
-# VS Code Extension Version: 1.2.0
