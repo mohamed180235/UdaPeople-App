@@ -4,15 +4,10 @@
       path: ~/backend 
       state: directory
   
-  - name: "Copy files"
-    become: true
-    shell: |
-      cp artifact.tar.gz ~/backend
-  
-  - name: "Unarchive backend files"
-    shell: |
-      cd ~/backend
-      tar xvzf artifact.tar.gz -C .
+  - name: "Unarchive"
+    unarchive:
+      src: artifact.tar.gz
+      dest: ~/backend
 
   - name: "Installing Node Dependencies"
     shell: |
@@ -32,6 +27,7 @@
       msg: "{{ execute_node.stdout_lines }}"
 
   - name: "Configure pm2 to start as service"
+    become: true
     shell: |
       sudo su -c "env PATH=$PATH:/usr/local/bin pm2 startup systemd -u ubuntu --hp /home/ubuntu"
       pm2 save

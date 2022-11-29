@@ -336,18 +336,22 @@ jobs:
           command: |
             # your code here
             sudo apt update
-            sudo apt -y install tar
+            sudo apt-get install tar gzip -y
+      - run:
+          name: Package backend
+          command: |
+            cd backend
+            npm install
+            npm run build
+            tar -czvf artifact.tar.gz dist/* package*
+            cd .. 
+            mkdir .circleci/ansible/roles/deploy/files
+            cp backend/artifact.tar.gz .circleci/ansible/roles/deploy/files
       - run:
           name: Deploy backend
           command: |
             # your code here
-            cd backend
-            npm install
-            npm run build
 
-            cd ..
-            tar -C backend -czvf artifact.tar.gz .
-            
             export TYPEORM_MIGRATIONS_DIR=./migrations
             export TYPEORM_ENTITIES=./modules/domain/**/*.entity{.ts,.js}
             export TYPEORM_MIGRATIONS=./migrations/*.ts
