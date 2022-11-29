@@ -391,6 +391,7 @@ jobs:
           name: Backend smoke test.
           command: |
             # your code here
+            export API_URL="http://${BACKEND_IP}:3030"
             if curl "${API_URL}/api/status" | grep "ok"
             then
                 return 0
