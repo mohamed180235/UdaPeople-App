@@ -260,6 +260,8 @@ jobs:
           command: |
             cd backend
             npm install
+            npm audit fix --force --audit-level=critical         
+            npm audit fix --force --audit-level=critical
             npm run migrations > migrations_dump.txt
             cat migrations_dump.txt
       - run:
@@ -275,43 +277,50 @@ jobs:
       - destroy-environment
       - revert-migrations
 
-#   deploy-frontend:
-#     docker:
-#       # Docker image here that supports AWS CLI
-#     steps:
-#       # Checkout code from git
-#       - run:
-#           name: Install dependencies
-#           command: |
-#             # your code here
-#       - run:
-#           name: Get backend url
-#           command: |
-#             # your code here
-#             export API_URL="http://${BACKEND_IP}:3030"
-#             echo "${API_URL}"
-#       - run:
-#           name: Deploy frontend objects
-#           command: |
-#             # your code here
-#       # Here's where you will add some code to rollback on failure      
+  # deploy-frontend:
+  #   docker:
+  #     # Docker image here that supports AWS CLI
+  #   steps:
+  #     # Checkout code from git
+  #     - checkout
+  #     - run:
+  #         name: Install dependencies
+  #         command: |
+  #           # your code here
+  #     - run:
+  #         name: Get backend url
+  #         command: |
+  #           # your code here
+  #           export API_URL="http://${BACKEND_IP}:3030"
+  #           echo "${API_URL}"
+  #     - run:
+  #         name: Deploy frontend objects
+  #         command: |
+  #           # your code here
+  #     # Here's where you will add some code to rollback on failure      
                     
-#   deploy-backend:
-#     docker:
-#       # Docker image here that supports Ansible
-#     steps:
-#       # Checkout code from git
-#       # Add ssh keys with fingerprint
-#       # attach workspace
-#       - run:
-#           name: Install dependencies
-#           command: |
-#             # your code here
-#       - run:
-#           name: Deploy backend
-#           command: |
-#             # your code here
-#       # Here's where you will add some code to rollback on failure  
+  # deploy-backend:
+  #   docker:
+  #     # Docker image here that supports Ansible
+  #   steps:
+  #     # Checkout code from git
+  #     - checkout
+  #     # Add ssh keys with fingerprint
+  #     - add_ssh_keys:
+  #         fingerprints:
+  #           - "4f:ea:dc:e7:f2:d2:ac:49:d6:68:25:fe:90:a0:a4:42"    
+  #     # attach workspace
+  #     - attach_workspace:
+  #         at: ~/       
+  #     - run:
+  #         name: Install dependencies
+  #         command: |
+  #           # your code here
+  #     - run:
+  #         name: Deploy backend
+  #         command: |
+  #           # your code here
+  #     # Here's where you will add some code to rollback on failure  
 
 #   smoke-test:
 #     docker:
