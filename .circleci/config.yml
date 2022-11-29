@@ -413,9 +413,11 @@ jobs:
   cloudfront-update:
     docker:
       # Docker image here that supports AWS CLI
-      - image: amazon/aws-cli
+      - image: cimg/python:3.10
     steps:
       # Checkout code from git
+      - checkout
+      - install_awscli
       - run:
           name: Install dependencies
           command: |
