@@ -331,10 +331,12 @@ jobs:
       - install_ansible
       - install_awscli
       - install_nodejs
-      # - run:
-      #     name: Install dependencies
-      #     command: |
-      #       # your code here
+      - run:
+          name: Install dependencies
+          command: |
+            # your code here
+            sudo apt update
+            sudo apt -y install tar
       - run:
           name: Deploy backend
           command: |
