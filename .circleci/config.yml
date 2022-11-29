@@ -376,7 +376,7 @@ jobs:
           name: Install dependencies
           command: |
             # your code here
-            apt install -y curl
+            sudo apt install -y curl
       - run:
           name: Get backend url
           command: |
