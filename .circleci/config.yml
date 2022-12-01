@@ -25,8 +25,6 @@ commands:
       - run:
           name: Install Node.js 13.8.0
           command: |
-            sudo apt update
-            sudo apt upgrade
             curl -fsSL https://deb.nodesource.com/setup_lts.x | sudo -E bash -
             sudo apt install -y nodejs
             sudo apt install -y npm
@@ -70,8 +68,8 @@ commands:
             if (( ${SUCCESS} == 1 ));
             then
               cd ~/project/backend
-              npm install
-              npm run migration:revert
+              sudo npm install
+              sudo npm run migration:revert
             fi
             
 jobs:
@@ -262,7 +260,7 @@ jobs:
             cd backend
             npm install
             # Run and save the migration output
-            npm run migrations-win > migrations_dump.txt
+            npm run migrations > migrations_dump.txt
             cat migrations_dump.txt
       - run:
           name: Send migration results to KVDB 
