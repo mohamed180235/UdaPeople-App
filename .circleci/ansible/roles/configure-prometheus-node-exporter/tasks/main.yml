@@ -25,3 +25,4 @@
     daemon_reload: yes
     name: node_exporter
     enabled: yes
+    # dqfkdngxhkxhnvit
