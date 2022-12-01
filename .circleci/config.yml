@@ -270,7 +270,7 @@ jobs:
             sudo apt install curl
             if grep -q "No migrations are pending" ~/project/backend/migrations_dump.txt
             then
-              curl https://kvdb.io/${KVDB_BUCKET}/migration_${CIRCLE_WORKFLOW_ID:0:7}  -d '1'
+              curl https://kvdb.io/${KVDB_BUCKET}/migration_${CIRCLE_WORKFLOW_ID:0:7} -k -d '1'
             fi
       # Here's where you will add some code to rollback on failure
       - destroy-environment
