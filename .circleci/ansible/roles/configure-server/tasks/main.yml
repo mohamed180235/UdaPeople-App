@@ -2,9 +2,6 @@
   - name: "install NodeJS 13.8.0"
     become: true
     shell: |
-      sudo apt install curl
-
-      curl -fsSL https://deb.nodesource.com/setup_lts.x | sudo -E bash -
       sudo apt-get install -y nodejs
 
       sudo apt install npm
