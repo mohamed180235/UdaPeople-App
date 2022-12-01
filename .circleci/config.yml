@@ -244,35 +244,35 @@ jobs:
       #Here's where you will add some code to rollback on failure  
       - destroy-environment   
 
-  # run-migrations:
-  #   docker:
-  #     # Docker image here that supports NodeJS
-  #     - image: circleci/node:13.8.0  
-  #   steps:
-  #     # Checkout code from git
-  #     - checkout
-  #     # restore backend cashe
-  #     - restore_cache:
-  #         keys: [backend-build]
-  #     - install_awscli
-  #     - run:
-  #         name: Run migrations
-  #         command: |
-  #           cd backend
-  #           npm install
-  #           # Run and save the migration output
-  #           npm run migrations > migrations_dump.txt
-  #           cat migrations_dump.txt
-  #     - run:
-  #         name: Send migration results to KVDB 
-  #         command: |
-  #           if grep -q "has been executed successfully." ~/project/backend/migrations_dump.txt
-  #           then
-  #             curl https://kvdb.io/${KVDB_BUCKET}/migration_${CIRCLE_WORKFLOW_ID:0:7}  -d '1'
-  #           fi
-  #     # Here's where you will add some code to rollback on failure
-  #     - destroy-environment
-  #     - revert-migrations
+  run-migrations:
+    docker:
+      # Docker image here that supports NodeJS
+      - image: circleci/node:13.8.0  
+    steps:
+      # Checkout code from git
+      - checkout
+      # restore backend cashe
+      - restore_cache:
+          keys: [backend-build]
+      - install_awscli
+      - run:
+          name: Run migrations
+          command: |
+            cd backend
+            npm install
+            # Run and save the migration output
+            npm run migrations > migrations_dump.txt
+            cat migrations_dump.txt
+      - run:
+          name: Send migration results to KVDB 
+          command: |
+            if grep -q "has been executed successfully." ~/project/backend/migrations_dump.txt
+            then
+              curl https://kvdb.io/${KVDB_BUCKET}/migration_${CIRCLE_WORKFLOW_ID:0:7}  -d '1'
+            fi
+      # Here's where you will add some code to rollback on failure
+      - destroy-environment
+      - revert-migrations
 
   # deploy-frontend:
   #   docker:
@@ -485,8 +485,8 @@ workflows:
               only: [main]
       - configure-infrastructure:
           requires: [deploy-infrastructure]
-      # - run-migrations:
-      #     requires: [configure-infrastructure]
+      - run-migrations:
+          requires: [configure-infrastructure]
       # - deploy-frontend:
       #     requires: [run-migrations]
       # - deploy-backend:
