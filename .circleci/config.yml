@@ -369,11 +369,10 @@ jobs:
   smoke-test:
     docker:
       # Lightweight Docker image 
-      - image: cimg/python:3.10
+      - image: circleci/node:13.8.0 
     steps:
       # Checkout code from git
       - checkout
-      - install_nodejs
       - install_awscli
       - run:
           name: Install dependencies
