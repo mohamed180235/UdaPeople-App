@@ -278,14 +278,13 @@ jobs:
   deploy-frontend:
     docker:
       # Docker image here that supports AWS CLI
-      - image: cimg/python:3.10
+      - image: circleci/node:13.8.0 
     steps:
       # Checkout code from git
       - checkout
       - restore_cache:
           keys: [frontend-build]
       - install_awscli
-      - install_nodejs
       - run:
           name: Install dependencies
           command: |
@@ -318,7 +317,7 @@ jobs:
   deploy-backend:
     docker:
       # Docker image here that supports Ansible
-      - image: cimg/python:3.10
+      - image: circleci/node:13.8.0 
     steps:
       # Checkout code from git
       - checkout
@@ -331,9 +330,7 @@ jobs:
           at: ~/       
       - restore_cache: 
           keys: [backend-build]
-      - install_ansible
       - install_awscli
-      - install_nodejs
       - run:
           name: Install dependencies
           command: |
@@ -345,6 +342,7 @@ jobs:
       - run:
           name: Package backend
           command: |
+            sudo apt install python3
             cd backend
             npm install
             npm run build
@@ -352,6 +350,7 @@ jobs:
             
             cd .. 
             cp backend/artifact.tar.gz .circleci/ansible/roles/deploy/files
+      - install_ansible     
       - run:
           name: Deploy backend
           command: |
