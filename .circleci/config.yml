@@ -317,7 +317,7 @@ jobs:
   deploy-backend:
     docker:
       # Docker image here that supports Ansible
-      - image: circleci/node:13.8.0 
+      - image: cimg/python:3.10
     steps:
       # Checkout code from git
       - checkout
@@ -330,19 +330,19 @@ jobs:
           at: ~/       
       - restore_cache: 
           keys: [backend-build]
+      - install_ansible
       - install_awscli
       - run:
           name: Install dependencies
           command: |
             # your code here
             sudo apt update
-            sudo apt-get install tar gzip -y
+            sudo apt-get install tar gzip nodejs npm -y
             cd backend
             npm run build
       - run:
           name: Package backend
           command: |
-            sudo apt install python3
             cd backend
             npm install
             npm run build
@@ -350,7 +350,6 @@ jobs:
             
             cd .. 
             cp backend/artifact.tar.gz .circleci/ansible/roles/deploy/files
-      - install_ansible     
       - run:
           name: Deploy backend
           command: |
